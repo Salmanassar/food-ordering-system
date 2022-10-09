@@ -2,9 +2,9 @@ package org.food.ordering.system.order.service.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.food.ordering.system.domain.entity.BaseEntity;
-import org.food.ordering.system.domain.valueobject.Money;
-import org.food.ordering.system.domain.valueobject.OrderId;
+import org.food.ordering.system.order.system.domain.entity.BaseEntity;
+import org.food.ordering.system.order.system.domain.valueobject.Money;
+import org.food.ordering.system.order.system.domain.valueobject.OrderId;
 import org.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 
 @Setter

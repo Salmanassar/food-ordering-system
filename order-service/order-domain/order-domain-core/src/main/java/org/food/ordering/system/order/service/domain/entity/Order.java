@@ -1,12 +1,12 @@
 package org.food.ordering.system.order.service.domain.entity;
 
 import lombok.Getter;
-import org.food.ordering.system.domain.entity.AggregateRoot;
-import org.food.ordering.system.domain.valueobject.*;
+import org.food.ordering.system.order.system.domain.entity.AggregateRoot;
 import org.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import org.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import org.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import org.food.ordering.system.order.service.domain.valueobject.TrackingId;
+import org.food.ordering.system.order.system.domain.valueobject.*;
 
 import java.util.List;
 import java.util.UUID;
