@@ -1,24 +1,12 @@
 package org.food.ordering.system.order.system.domain;
 
 import lombok.extern.slf4j.Slf4j;
-import org.food.ordering.system.order.service.domain.OrderDomainService;
-import org.food.ordering.system.order.service.domain.entity.Customer;
-import org.food.ordering.system.order.service.domain.entity.Order;
-import org.food.ordering.system.order.service.domain.entity.Restaurant;
 import org.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
-import org.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import org.food.ordering.system.order.system.domain.dto.create.CreateOrderCommand;
 import org.food.ordering.system.order.system.domain.dto.create.CreateOrderResponse;
 import org.food.ordering.system.order.system.domain.mapper.OrderDataMapper;
 import org.food.ordering.system.order.system.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
-import org.food.ordering.system.order.system.domain.ports.output.repository.CustomerRepository;
-import org.food.ordering.system.order.system.domain.ports.output.repository.OrderRepository;
-import org.food.ordering.system.order.system.domain.ports.output.repository.RestaurantRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -36,9 +24,9 @@ public class OrderCreateCommandHandler {
     }
 
     public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
-       OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderCommand);
-       log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
-       orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
+        OrderCreatedEvent orderCreatedEvent = orderCreateHelper.persistOrder(createOrderCommand);
+        log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+        orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
         return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(), "Order is committed");
     }
 }
