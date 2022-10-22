@@ -5,15 +5,14 @@ import org.food.ordering.system.order.system.domain.dto.create.CreateOrderComman
 import org.food.ordering.system.order.system.domain.dto.create.CreateOrderResponse;
 import org.food.ordering.system.order.system.domain.dto.track.TrackOrderQuery;
 import org.food.ordering.system.order.system.domain.dto.track.TrackOrderResponse;
-import org.food.ordering.system.order.system.domain.ports.input.service.OderApplicationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.food.ordering.system.order.system.domain.ports.input.service.OrderApplicationService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 @Slf4j
 @Validated
 @Service
-class OrderApplicationServiceImpl implements OderApplicationService {
+class OrderApplicationServiceImpl implements OrderApplicationService {
     private final OrderCreateCommandHandler orderCreateCommandHandler;
     private final OrderTrackCommandHandler orderTrackCommandHandler;
 

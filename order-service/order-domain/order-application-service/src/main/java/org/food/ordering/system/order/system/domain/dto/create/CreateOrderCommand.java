@@ -1,8 +1,10 @@
 package org.food.ordering.system.order.system.domain.dto.create;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.food.ordering.system.order.service.domain.entity.Order;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 public class CreateOrderCommand {
 
@@ -28,4 +31,5 @@ public class CreateOrderCommand {
 
     @NotNull
     private final OrderAddress orderAddress;
+
 }

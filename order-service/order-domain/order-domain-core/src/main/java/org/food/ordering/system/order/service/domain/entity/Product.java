@@ -10,15 +10,35 @@ import org.food.ordering.system.order.system.domain.valueobject.ProductId;
 @Setter
 @AllArgsConstructor
 public class Product extends BaseEntity<ProductId> {
-    private String name;
-    private Money price;
+    public class Product extends BaseEntity<ProductId> {
+        private String name;
+        private Money price;
 
-    public Product(ProductId productId) {
-        super.setId(productId);
-    }
+        public Product(ProductId productId) {
+            super.setId(productId);
+        }
 
-    public void updateWithConfirmedNameAnaPrice(String name, Money price) {
-        this.name = name;
-        this.price = price;
-    }
+        public Product(ProductId productId, String s, Money money) {
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public Money getPrice() {
+            return this.price;
+        }
+
+        public void setName(final String name) {
+            this.name = name;
+        }
+
+        public void setPrice(final Money price) {
+            this.price = price;
+        }
+
+        public Product(final String name, final Money price) {
+            this.name = name;
+            this.price = price;
+        }
 }
