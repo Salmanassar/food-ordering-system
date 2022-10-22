@@ -8,6 +8,7 @@ import org.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import org.food.ordering.system.order.system.domain.dto.create.CreateOrderCommand;
 import org.food.ordering.system.order.system.domain.dto.create.CreateOrderResponse;
 import org.food.ordering.system.order.system.domain.dto.create.OrderAddress;
+import org.food.ordering.system.order.system.domain.dto.track.TrackOrderResponse;
 import org.food.ordering.system.order.system.domain.valueobject.CustomerId;
 import org.food.ordering.system.order.system.domain.valueobject.Money;
 import org.food.ordering.system.order.system.domain.valueobject.ProductId;
@@ -59,7 +60,13 @@ public class OrderDataMapper {
                                 .build())
                 .collect(Collectors.toList());
     }
-
+public TrackOrderResponse orderToTrackOrderResponse(Order order){
+        return TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .failureMassages(order.getFailureMassages())
+                .build();
+}
     private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
         return new StreetAddress(UUID.randomUUID(),
                 orderAddress.getStreet(),
