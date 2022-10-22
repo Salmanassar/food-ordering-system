@@ -57,16 +57,66 @@ public class OrderApplicationServiceTest {
 
     @BeforeAll
     public void init() {
-        this.createOrderCommand = CreateOrderCommand.builder().customerId(this.CUSTOM_ID).restaurantId(this.RESTAURANT_ID).orderAddress(OrderAddress.builder().street("street1").city("city1").postalCode("12345").build()).price(this.PRICE).orderItems(List.of(OrderItem.builder().productId(this.PRODUCT_ID).quantity(1).price(new BigDecimal("50.00")).subTotal(new BigDecimal("50.00")).build(), OrderItem.builder().productId(this.PRODUCT_ID).quantity(3).price(new BigDecimal("50.00")).subTotal(new BigDecimal("150.00")).build())).build();
-        this.createOrderCommandWrongPrice = CreateOrderCommand.builder().customerId(this.CUSTOM_ID).restaurantId(this.RESTAURANT_ID).orderAddress(OrderAddress.builder().street("street1").city("Paris").postalCode("12345").build()).price(new BigDecimal("200.00")).orderItems(List.of(OrderItem.builder().productId(this.PRODUCT_ID).quantity(1).price(new BigDecimal("50.00")).subTotal(new BigDecimal("50.00")).build(), OrderItem.builder().productId(this.PRODUCT_ID).quantity(1).price(new BigDecimal("50.00")).subTotal(new BigDecimal("50.00")).build())).build();
-        this.createOrderCommandWrongProductPrice = CreateOrderCommand.builder().customerId(this.CUSTOM_ID).restaurantId(this.RESTAURANT_ID).orderAddress(OrderAddress.builder().street("street1").city("city1").postalCode("12345").build()).price(new BigDecimal("210.00")).orderItems(List.of(OrderItem.builder().productId(this.PRODUCT_ID).quantity(1).price(new BigDecimal("60.00")).subTotal(new BigDecimal("60.00")).build(), OrderItem.builder().productId(this.PRODUCT_ID).quantity(3).price(new BigDecimal("50.00")).subTotal(new BigDecimal("150.00")).build())).build();
+        this.createOrderCommand = CreateOrderCommand.builder()
+                .customerId(this.CUSTOM_ID)
+                .restaurantId(this.RESTAURANT_ID)
+                .orderAddress(OrderAddress.builder()
+                        .street("street1").city("city1")
+                        .postalCode("12345").build())
+                .price(this.PRICE)
+                .orderItems(List.of(
+                        OrderItem.builder()
+                        .productId(this.PRODUCT_ID)
+                        .quantity(1)
+                        .price(new BigDecimal("50.00"))
+                        .subTotal(new BigDecimal("50.00")).build(),
+                        OrderItem.builder()
+                                .productId(this.PRODUCT_ID)
+                                .quantity(3).price(new BigDecimal("50.00"))
+                                .subTotal(new BigDecimal("150.00")).build()))
+                .build();
+        this.createOrderCommandWrongPrice = CreateOrderCommand.builder()
+                .customerId(this.CUSTOM_ID)
+                .restaurantId(this.RESTAURANT_ID)
+                .orderAddress(OrderAddress.builder()
+                        .street("street1").city("Paris")
+                        .postalCode("12345").build())
+                .price(new BigDecimal("200.00"))
+                .orderItems(List.of(OrderItem.builder()
+                        .productId(this.PRODUCT_ID)
+                        .quantity(1).
+                        price(new BigDecimal("50.00")).
+                        subTotal(new BigDecimal("50.00"))
+                        .build(),
+                        OrderItem.builder().productId(this.PRODUCT_ID)
+                                .quantity(1).price(new BigDecimal("50.00"))
+                                .subTotal(new BigDecimal("50.00"))
+                                .build()))
+                .build();
+        this.createOrderCommandWrongProductPrice = CreateOrderCommand.builder()
+                .customerId(this.CUSTOM_ID).
+                restaurantId(this.RESTAURANT_ID)
+                .orderAddress(OrderAddress.builder()
+                        .street("street1").city("city1")
+                        .postalCode("12345").build())
+                .price(new BigDecimal("210.00"))
+                .orderItems(List.of(OrderItem.builder()
+                        .productId(this.PRODUCT_ID)
+                        .quantity(1)
+                        .price(new BigDecimal("60.00"))
+                        .subTotal(new BigDecimal("60.00")).build(),
+                        OrderItem.builder().productId(this.PRODUCT_ID)
+                                .quantity(3).price(new BigDecimal("50.00"))
+                                .subTotal(new BigDecimal("150.00")).build()))
+                .build();
         Customer customer = new Customer();
         customer.setId(new CustomerId(this.CUSTOM_ID));
         Restaurant restaurantResponse = Restaurant.builder().restaurantId(new RestaurantId(this.createOrderCommand.getRestaurantId())).products(List.of(new Product(new ProductId(this.PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))), new Product(new ProductId(this.PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00"))))).active(true).build();
         Order order = this.orderDataMapper.createOrderCommandToOrder(this.createOrderCommand);
         order.setId(new OrderId(this.ORDER_ID));
         Mockito.when(this.customerRepository.findCustomer(this.CUSTOM_ID)).thenReturn(Optional.of(customer));
-        Mockito.when(this.restaurantRepository.findRestaurantInformation(this.orderDataMapper.createRestaurantOrderCommand(this.createOrderCommand))).thenReturn(Optional.of(restaurantResponse));
+        Mockito.when(this.restaurantRepository.findRestaurantInformation(this.orderDataMapper.createRestaurantOrderCommand(this.createOrderCommand)))
+                .thenReturn(Optional.of(restaurantResponse));
         Mockito.when(this.orderRepository.save((Order) ArgumentMatchers.any(Order.class))).thenReturn(order);
     }
 
