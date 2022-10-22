@@ -26,7 +26,7 @@ public class OrderTrackCommandHandler {
         Optional<Order> order = orderRepository.findByTrackingId(new TrackingId(trackOrderQuery.getOrderTrackId()));
         if (order.isEmpty()) {
             log.warn("Could not find oder with tracking id: ", trackOrderQuery.getOrderTrackId());
-            throw new OrderNotFoundDomainException("\"Could not find oder with tracking id: " + trackOrderQuery.getOrderTrackId());
+            throw new OrderNotFoundDomainException("Could not find oder with tracking id: " + trackOrderQuery.getOrderTrackId());
         }
         return orderDataMapper.orderToTrackOrderResponse(order.get());
     }

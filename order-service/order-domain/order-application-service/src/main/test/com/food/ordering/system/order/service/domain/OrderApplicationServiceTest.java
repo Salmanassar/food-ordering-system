@@ -30,6 +30,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @TestInstance(Lifecycle.PER_CLASS)
 @SpringBootTest(classes = OrderTestConfiguration.class)
 public class OrderApplicationServiceTest {
@@ -58,12 +61,12 @@ public class OrderApplicationServiceTest {
     @BeforeAll
     public void init() {
         this.createOrderCommand = CreateOrderCommand.builder()
-                .customerId(this.CUSTOM_ID)
-                .restaurantId(this.RESTAURANT_ID)
+                .customerId(CUSTOM_ID)
+                .restaurantId(RESTAURANT_ID)
                 .orderAddress(OrderAddress.builder()
                         .street("street1").city("city1")
                         .postalCode("12345").build())
-                .price(this.PRICE)
+                .price(PRICE)
                 .orderItems(List.of(
                         OrderItem.builder()
                         .productId(this.PRODUCT_ID)
@@ -79,9 +82,11 @@ public class OrderApplicationServiceTest {
                 .customerId(this.CUSTOM_ID)
                 .restaurantId(this.RESTAURANT_ID)
                 .orderAddress(OrderAddress.builder()
-                        .street("street1").city("Paris")
-                        .postalCode("12345").build())
-                .price(new BigDecimal("200.00"))
+                        .street("street1")
+                        .city("Paris")
+                        .postalCode("12345")
+                        .build())
+                .price(new BigDecimal("250.00"))
                 .orderItems(List.of(OrderItem.builder()
                         .productId(this.PRODUCT_ID)
                         .quantity(1).
@@ -89,8 +94,8 @@ public class OrderApplicationServiceTest {
                         subTotal(new BigDecimal("50.00"))
                         .build(),
                         OrderItem.builder().productId(this.PRODUCT_ID)
-                                .quantity(1).price(new BigDecimal("50.00"))
-                                .subTotal(new BigDecimal("50.00"))
+                                .quantity(3).price(new BigDecimal("50.00"))
+                                .subTotal(new BigDecimal("150.00"))
                                 .build()))
                 .build();
         this.createOrderCommandWrongProductPrice = CreateOrderCommand.builder()
@@ -107,11 +112,15 @@ public class OrderApplicationServiceTest {
                         .subTotal(new BigDecimal("60.00")).build(),
                         OrderItem.builder().productId(this.PRODUCT_ID)
                                 .quantity(3).price(new BigDecimal("50.00"))
-                                .subTotal(new BigDecimal("150.00")).build()))
+                                .subTotal(new BigDecimal("150.00"))
+                                .build()))
                 .build();
         Customer customer = new Customer();
         customer.setId(new CustomerId(this.CUSTOM_ID));
-        Restaurant restaurantResponse = Restaurant.builder().restaurantId(new RestaurantId(this.createOrderCommand.getRestaurantId())).products(List.of(new Product(new ProductId(this.PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))), new Product(new ProductId(this.PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00"))))).active(true).build();
+        Restaurant restaurantResponse = Restaurant.builder().restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+                .products(List.of(new Product(new ProductId(this.PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
+                        new Product(new ProductId(this.PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
+                .active(true).build();
         Order order = this.orderDataMapper.createOrderCommandToOrder(this.createOrderCommand);
         order.setId(new OrderId(this.ORDER_ID));
         Mockito.when(this.customerRepository.findCustomer(this.CUSTOM_ID)).thenReturn(Optional.of(customer));
@@ -122,40 +131,41 @@ public class OrderApplicationServiceTest {
 
     @Test
     public void createOrderTest() {
-        CreateOrderResponse createOrderResponse = this.orderApplicationService.createOrder(this.createOrderCommand);
-        Assertions.assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
-        Assertions.assertEquals(createOrderResponse.getMassage(), "Order is created successfully");
+        CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
+        assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
+        assertEquals(createOrderResponse.getMassage(), "Order is committed successfully");
     }
 
     @Test
     public void testCreateOrderWithWrongTotalPrice() {
-        OrderDomainException orderDomainException = (OrderDomainException) Assertions.assertThrows(OrderDomainException.class, () -> {
+        OrderDomainException orderDomainException = (OrderDomainException) assertThrows(OrderDomainException.class, () -> {
             this.orderApplicationService.createOrder(this.createOrderCommandWrongPrice);
         });
-        Assertions.assertEquals(orderDomainException.getMessage(), "Total price 200.00 is not equals to 100.00");
+        assertEquals(orderDomainException.getMessage(), "Total price 250.00 is not equals to 200.00");
     }
 
     @Test
     public void testCreateOrderWithWrongProductPrice() {
-        OrderDomainException orderDomainException = (OrderDomainException) Assertions.assertThrows(OrderDomainException.class, () -> {
+        OrderDomainException orderDomainException = (OrderDomainException) assertThrows(OrderDomainException.class, () -> {
             this.orderApplicationService.createOrder(this.createOrderCommandWrongProductPrice);
         });
-        Assertions.assertEquals(orderDomainException.getMessage(), "Order item price 60.00 is not valid for product " + this.PRODUCT_ID);
+        assertEquals(orderDomainException.getMessage(), "Order item price 60.00 is not valid for product " + this.PRODUCT_ID);
     }
 
     @Test
     public void testCreateOderWithPassiveRestaurant() {
         Restaurant restaurantResponse = Restaurant.builder()
-                .restaurantId(new RestaurantId(this.createOrderCommand.getRestaurantId()))
-                .products(List.of(new Product(new ProductId(this.PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
-                        new Product(new ProductId(this.PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
+                .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+                .products(List.of(new Product(new ProductId(PRODUCT_ID), "product-1", new Money(new BigDecimal("50.00"))),
+                        new Product(new ProductId(PRODUCT_ID), "product-2", new Money(new BigDecimal("50.00")))))
                 .active(false)
                 .build();
-        Mockito.when(this.restaurantRepository.findRestaurantInformation(this.orderDataMapper.createRestaurantOrderCommand(this.createOrderCommand))).thenReturn(Optional.of(restaurantResponse));
-        OrderDomainException orderDomainException = (OrderDomainException) Assertions.assertThrows(OrderDomainException.class, () -> {
-            this.orderApplicationService.createOrder(this.createOrderCommand);
+        Mockito.when(restaurantRepository.findRestaurantInformation(orderDataMapper.createRestaurantOrderCommand(createOrderCommand)))
+                .thenReturn(Optional.of(restaurantResponse));
+        OrderDomainException orderDomainException = assertThrows(OrderDomainException.class, () -> {
+            orderApplicationService.createOrder(createOrderCommand);
         });
-        Assertions.assertEquals(orderDomainException.getMessage(), "Restaurant with id " + this.RESTAURANT_ID + " is currently not active");
+        assertEquals(orderDomainException.getMessage(), "Restaurant with id " + RESTAURANT_ID + " is currently not active");
     }
 }
 

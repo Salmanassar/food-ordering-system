@@ -19,17 +19,25 @@ import java.util.stream.Collectors;
 @Component
 public class OrderDataMapper {
     public Restaurant createRestaurantOrderCommand(CreateOrderCommand createOrderCommand) {
-        return Restaurant.builder().restaurantId(new RestaurantId(createOrderCommand.getCustomerId())).products((List)createOrderCommand.getOrderItems().stream().map((orderItem) -> {
+        return Restaurant.builder().restaurantId(new RestaurantId(createOrderCommand.getCustomerId())).products(createOrderCommand.getOrderItems().stream().map((orderItem) -> {
             return new Product(new ProductId(orderItem.getProductId()));
         }).collect(Collectors.toList())).build();
     }
 
     public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
-        return Order.builder().customerId(new CustomerId(createOrderCommand.getCustomerId())).restaurantId(new RestaurantId(createOrderCommand.getRestaurantId())).deliveryAddress(this.orderAddressToStreetAddress(createOrderCommand.getOrderAddress())).price(new Money(createOrderCommand.getPrice())).items(this.orderItemsToOrderItemEntity(createOrderCommand.getOrderItems())).build();
+        return Order.builder()
+                .customerId(new CustomerId(createOrderCommand.getCustomerId()))
+                .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+                .deliveryAddress(orderAddressToStreetAddress(createOrderCommand.getOrderAddress()))
+                .price(new Money(createOrderCommand.getPrice()))
+                .items(this.orderItemsToOrderItemEntity(createOrderCommand.getOrderItems())).build();
     }
 
     public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
-        return CreateOrderResponse.builder().orderTrackerId((UUID)order.getTrackingId().getValue()).orderStatus(order.getOrderStatus()).massage(message).build();
+        return CreateOrderResponse.builder()
+                .orderTrackerId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .massage(message).build();
     }
 
     private List<OrderItem> orderItemsToOrderItemEntity(List<org.food.ordering.system.order.system.domain.dto.create.OrderItem> orderItems) {
