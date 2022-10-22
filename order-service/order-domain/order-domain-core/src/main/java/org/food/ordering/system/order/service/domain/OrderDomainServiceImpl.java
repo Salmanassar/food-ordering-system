@@ -62,10 +62,10 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     }
 
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
-        order.getItems().forEach(orderItem -> restaurant.getProducts().forEach(restaurantProduct -> {
-            Product currentProduct = orderItem.getProduct();
-            currentProduct.updateWithConfirmedNameAnaPrice(restaurantProduct.getName(),
-                    restaurantProduct.getPrice());
-        }));
+//        order.getItems().forEach(orderItem -> restaurant.getProducts().forEach(restaurantProduct -> {
+//            Product currentProduct = orderItem.getProduct();
+//            currentProduct.updateWithConfirmedNameAnaPrice(restaurantProduct.getName(),
+//                    restaurantProduct.getPrice());
+//        }));
     }
 }

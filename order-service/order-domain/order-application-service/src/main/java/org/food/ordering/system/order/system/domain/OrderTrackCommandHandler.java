@@ -3,7 +3,6 @@ package org.food.ordering.system.order.system.domain;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.food.ordering.system.order.service.domain.entity.Order;
-import org.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import org.food.ordering.system.order.service.domain.exception.OrderNotFoundDomainException;
 import org.food.ordering.system.order.service.domain.valueobject.TrackingId;
 import org.food.ordering.system.order.system.domain.dto.track.TrackOrderQuery;
