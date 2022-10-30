@@ -1,7 +1,8 @@
 package org.food.ordering.system.order.system.domain.dto.create;
 
-import lombok.*;
-import org.food.ordering.system.order.system.domain.valueobject.Money;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;

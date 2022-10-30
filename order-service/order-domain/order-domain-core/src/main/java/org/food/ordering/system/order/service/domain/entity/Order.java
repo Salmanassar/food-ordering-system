@@ -2,6 +2,7 @@ package org.food.ordering.system.order.service.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.food.ordering.system.order.system.domain.entity.AggregateRoot;
 import org.food.ordering.system.order.service.domain.exception.OrderDomainException;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Order extends AggregateRoot<OrderId> {
     private final CustomerId customerId;
     private final RestaurantId restaurantId;

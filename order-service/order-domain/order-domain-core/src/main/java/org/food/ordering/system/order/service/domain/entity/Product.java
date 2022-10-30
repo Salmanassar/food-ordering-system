@@ -1,6 +1,8 @@
 package org.food.ordering.system.order.service.domain.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.food.ordering.system.order.system.domain.entity.BaseEntity;
 import org.food.ordering.system.order.system.domain.valueobject.Money;
@@ -8,6 +10,8 @@ import org.food.ordering.system.order.system.domain.valueobject.ProductId;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Product extends BaseEntity<ProductId> {
     private String name;
     private Money price;

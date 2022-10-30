@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RestaurantApprovalResponseMessageListenerImpl implements RestaurantApprovalResponseMessageListener {
-    private static final Logger log = LoggerFactory.getLogger(RestaurantApprovalResponseMessageListenerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantApprovalResponseMessageListenerImpl.class);
 
     public RestaurantApprovalResponseMessageListenerImpl() {
     }

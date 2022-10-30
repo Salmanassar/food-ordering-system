@@ -1,14 +1,11 @@
 package org.food.ordering.system.order.system.domain.dto.create;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 
-import java.util.UUID;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder

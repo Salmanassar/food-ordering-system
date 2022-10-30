@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.food.ordering.system.order.service.domain.entity.Order;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;

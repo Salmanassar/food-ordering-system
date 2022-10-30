@@ -16,12 +16,16 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class OrderDataMapper {
     public Restaurant createRestaurantOrderCommand(CreateOrderCommand createOrderCommand) {
-        return Restaurant.builder().restaurantId(new RestaurantId(createOrderCommand.getCustomerId())).products(createOrderCommand.getOrderItems().stream().map((orderItem) -> {
-            return new Product(new ProductId(orderItem.getProductId()));
-        }).collect(Collectors.toList())).build();
+        return Restaurant.builder()
+                .restaurantId(new RestaurantId(createOrderCommand.getCustomerId()))
+                .products(createOrderCommand.getOrderItems().stream()
+                        .map(orderItem -> new Product(new ProductId(orderItem.getProductId())))
+                        .collect(toList())).build();
     }
 
     public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
@@ -41,16 +45,21 @@ public class OrderDataMapper {
     }
 
     private List<OrderItem> orderItemsToOrderItemEntity(List<org.food.ordering.system.order.system.domain.dto.create.OrderItem> orderItems) {
-        return orderItems.stream().map((orderItemsDTO) -> {
-            return OrderItem.builder()
-                    .orderId(new OrderId(orderItemsDTO.getProductId()))
-                    .product(new Product(new ProductId(orderItemsDTO.getProductId())))
-                    .price(new Money(orderItemsDTO.getPrice())).quantity(orderItemsDTO.getQuantity()).subTotal(new Money(orderItemsDTO.getSubTotal())).build();
-        }).collect(Collectors.toList());
+        return orderItems.stream().map(orderItemsDTO -> OrderItem.builder()
+                .orderId(new OrderId(orderItemsDTO.getProductId()))
+                .product(new Product(new ProductId(orderItemsDTO.getProductId())))
+                .price(new Money(orderItemsDTO.getPrice()))
+                .quantity(orderItemsDTO.getQuantity())
+                .subTotal(new Money(orderItemsDTO.getSubTotal()))
+                .build())
+                .collect(toList());
     }
 
     public TrackOrderResponse orderToTrackOrderResponse(Order order) {
-        return TrackOrderResponse.builder().orderTrackingId((UUID)order.getTrackingId().getValue()).orderStatus(order.getOrderStatus()).failureMassages(order.getFailureMassages()).build();
+        return TrackOrderResponse.builder().orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .failureMassages(order.getFailureMassages())
+                .build();
     }
 
     private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
