@@ -18,7 +18,9 @@
         <module>order-messaging</module>
         <module>order-container</module>
     </modules>
+<dependencies>
 
+</dependencies>
     <properties>
     </properties>
 

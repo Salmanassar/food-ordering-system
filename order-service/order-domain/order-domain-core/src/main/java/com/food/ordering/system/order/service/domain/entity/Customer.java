@@ -1,0 +1,12 @@
+package com.food.ordering.system.order.service.domain.entity;
+
+import com.food.ordering.system.order.system.domain.entity.AggregateRoot;
+import com.food.ordering.system.order.system.domain.valueobject.CustomerId;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+public class Customer extends AggregateRoot<CustomerId> {
+    public Customer(CustomerId customerId){
+        super.setId(customerId);
+    }
+}

@@ -5,22 +5,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.food.ordering.system.order.service.domain.entity.Customer;
-import org.food.ordering.system.order.service.domain.entity.Order;
-import org.food.ordering.system.order.service.domain.entity.Product;
-import org.food.ordering.system.order.service.domain.entity.Restaurant;
-import org.food.ordering.system.order.service.domain.exception.OrderDomainException;
-import org.food.ordering.system.order.system.domain.dto.create.CreateOrderResponse;
-import org.food.ordering.system.order.system.domain.dto.create.OrderAddress;
-import org.food.ordering.system.order.system.domain.dto.create.OrderItem;
-import org.food.ordering.system.order.system.domain.ports.input.service.OrderApplicationService;
-import org.food.ordering.system.order.system.domain.dto.create.CreateOrderCommand;
-import org.food.ordering.system.order.system.domain.mapper.OrderDataMapper;
-import org.food.ordering.system.order.system.domain.ports.output.repository.CustomerRepository;
-import org.food.ordering.system.order.system.domain.ports.output.repository.OrderRepository;
-import org.food.ordering.system.order.system.domain.ports.output.repository.RestaurantRepository;
-import org.food.ordering.system.order.system.domain.valueobject.*;
-import org.junit.jupiter.api.Assertions;
+import com.food.ordering.system.order.service.domain.entity.Customer;
+import com.food.ordering.system.order.service.domain.entity.Order;
+import com.food.ordering.system.order.service.domain.entity.Product;
+import com.food.ordering.system.order.service.domain.entity.Restaurant;
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
+import com.food.ordering.system.order.system.domain.dto.create.CreateOrderResponse;
+import com.food.ordering.system.order.system.domain.dto.create.OrderAddress;
+import com.food.ordering.system.order.system.domain.dto.create.OrderItem;
+import com.food.ordering.system.order.system.domain.ports.input.service.OrderApplicationService;
+import com.food.ordering.system.order.system.domain.dto.create.CreateOrderCommand;
+import com.food.ordering.system.order.system.domain.mapper.OrderDataMapper;
+import com.food.ordering.system.order.system.domain.ports.output.repository.CustomerRepository;
+import com.food.ordering.system.order.system.domain.ports.output.repository.OrderRepository;
+import com.food.ordering.system.order.system.domain.ports.output.repository.RestaurantRepository;
+import com.food.ordering.system.order.system.domain.valueobject.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -165,7 +164,7 @@ public class OrderApplicationServiceTest {
         OrderDomainException orderDomainException = assertThrows(OrderDomainException.class, () -> {
             orderApplicationService.createOrder(createOrderCommand);
         });
-        assertEquals(orderDomainException.getMessage(), "Restaurant with id " + RESTAURANT_ID + " is currently not active");
+        assertEquals(orderDomainException.getMessage(), "Restaurant with id " + RESTAURANT_ID + " is currently not active!");
     }
 }
 
