@@ -16,7 +16,6 @@ public class OrderPaidEvent extends OrderEvent {
         this.orderPaidEventDomainEventPublisher = orderPaidEventDomainEventPublisher;
     }
 
-
     public void fire() {
         orderPaidEventDomainEventPublisher.publish(this);
     }

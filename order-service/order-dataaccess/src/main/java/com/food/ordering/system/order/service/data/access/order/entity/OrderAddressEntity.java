@@ -20,7 +20,7 @@ public class OrderAddressEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ORDER_ID")
-    private OrderEntity orderEntity;
+    private OrderEntity order;
 
     private String city;
     private String postalCode;
