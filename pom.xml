@@ -12,6 +12,7 @@
         <module>common/common-application</module>
         <module>customer-service</module>
         <module>payment-service</module>
+        <module>restaurant-service</module>
     </modules>
 
     <parent>
@@ -33,7 +34,7 @@
         <mockito.version>4.5.1</mockito.version>
         <avro.version>1.11.0</avro.version>
         <spring.boot.starter.logging.version>3.0.0</spring.boot.starter.logging.version>
-        <sl4j.version>2.0.6</sl4j.version>
+        <sl4j.version>2.0.1</sl4j.version>
 <!--        <lombok.version>1.18.24</lombok.version>-->
     </properties>
 
@@ -72,7 +73,47 @@
             </dependency>
             <dependency>
                 <groupId>org.food.ordering.system</groupId>
+                <artifactId>payment-application-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>payment-dataaccess</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>payment-messaging</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>restaurant-domain-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>restaurant-application-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>restaurant-messaging</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>restaurant-dataaccess</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
                 <artifactId>common-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.food.ordering.system</groupId>
+                <artifactId>common-dataaccess</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -118,7 +159,7 @@
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
+                <artifactId>slf4j-api</artifactId>
                 <version>${sl4j.version}</version>
                 <type>pom</type>
             </dependency>
