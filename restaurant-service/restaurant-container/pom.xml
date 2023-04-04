@@ -10,5 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>restaurant-container</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.food.ordering.system</groupId>
+            <artifactId>restaurant-domain-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
