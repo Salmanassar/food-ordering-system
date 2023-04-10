@@ -1,7 +1,6 @@
 server:
   port: 8182
 
-
 logging:
   level:
     com.food.ordering.system: DEBUG
@@ -19,16 +18,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=payment  &binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
-  sql:
-    init:
-      platform: postgres
-      mode:
-      schema-locations: classpath:init-schema.sql
-      initialization-mode: always
+    platform: postgres
+    schema: classpath:init-schema.sql
+    data: classpath:init-data.sql
+    initialization-mode: always
 
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092

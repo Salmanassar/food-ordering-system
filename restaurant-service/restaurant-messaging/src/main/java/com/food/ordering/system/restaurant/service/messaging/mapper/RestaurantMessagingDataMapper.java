@@ -1,15 +1,14 @@
 package com.food.ordering.system.restaurant.service.messaging.mapper;
 
-
-import com.food.ordering.system.dataaccess.restaurant.restaurant.service.domain.dto.RestaurantApprovalRequest;
+import com.food.ordering.system.domain.valueobject.ProductId;
+import com.food.ordering.system.domain.valueobject.RestaurantOrderStatus;
 import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
-import com.food.ordering.system.order.system.domain.valueobject.ProductId;
-import com.food.ordering.system.order.system.domain.valueobject.RestaurantOrderStatus;
-import com.food.ordering.system.restaurant.domain.core.entity.Product;
-import com.food.ordering.system.restaurant.domain.core.event.OrderApprovedEvent;
-import com.food.ordering.system.restaurant.domain.core.event.OrderRejectedEvent;
+import com.food.ordering.system.restaurant.service.domain.dto.RestaurantApprovalRequest;
+import com.food.ordering.system.restaurant.service.domain.entity.Product;
+import com.food.ordering.system.restaurant.service.domain.event.OrderApprovedEvent;
+import com.food.ordering.system.restaurant.service.domain.event.OrderRejectedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -26,7 +25,7 @@ public class RestaurantMessagingDataMapper {
                 .setRestaurantId(orderApprovedEvent.getRestaurantId().getValue().toString())
                 .setCreatedAt(orderApprovedEvent.getCreatedAt().toInstant())
                 .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderApprovedEvent.
-                        getOrderApproval().getOrderApprovalStatus().name()))
+                        getOrderApproval().getApprovalStatus().name()))
                 .setFailureMessages(orderApprovedEvent.getFailureMessages())
                 .build();
     }
@@ -40,7 +39,7 @@ public class RestaurantMessagingDataMapper {
                 .setRestaurantId(orderRejectedEvent.getRestaurantId().getValue().toString())
                 .setCreatedAt(orderRejectedEvent.getCreatedAt().toInstant())
                 .setOrderApprovalStatus(OrderApprovalStatus.valueOf(orderRejectedEvent.
-                        getOrderApproval().getOrderApprovalStatus().name()))
+                        getOrderApproval().getApprovalStatus().name()))
                 .setFailureMessages(orderRejectedEvent.getFailureMessages())
                 .build();
     }

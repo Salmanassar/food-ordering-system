@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>infrastructure</artifactId>
-        <groupId>org.food.ordering.system</groupId>
+        <groupId>com.food.ordering.system</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,23 +17,25 @@
         <module>kafka-model</module>
         <module>kafka-config-data</module>
     </modules>
+
     <repositories>
         <repository>
             <id>confluent</id>
             <url>https://packages.confluent.io/maven/</url>
         </repository>
     </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>${spring.kafka.version}</version>
+                <version>${spring-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.confluent</groupId>
                 <artifactId>kafka-avro-serializer</artifactId>
-                <version>${kafka.avro.serializer.version}</version>
+                <version>${kafka-avro-serializer.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
@@ -49,7 +51,7 @@
                     </exclusion>
                     <exclusion>
                         <groupId>io.swagger</groupId>
-                        <artifactId>swagd-core</artifactId>
+                        <artifactId>swagger-core</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -60,4 +62,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
 </project>
